@@ -1,0 +1,195 @@
+{% load static %}
+
+{% block profile %}
+    <!--About Me card starts here!-->
+    <div class="ui fluid card">
+        <div class="content">
+            <div class="ui header">
+              <form method="POST" action="/placement/" class="ui form" role="form">
+                About Me
+
+                  {{ form.non_field_errors }}
+                  {% csrf_token %}
+                  <input type="submit" value="Save Profile Details" class="ui red mini button right floated" name="profilesubmit">
+            </div>
+
+            <div class="ui divider"></div>
+
+            <div class="ui large fluid input">
+                <input name=about
+                          rows=5
+                          type="text"
+                          style="width: 100%;"
+                          value="{{ profile.about_me }}"/>
+            </div>
+        </div>
+
+    </div>
+    <!--About Me card ends here!-->
+
+
+    <!--The start of details card!-->
+    <div class="ui fluid card">
+        <div class="content">
+            <div class="ui header">Details</div>
+            <div class="ui divider"></div>
+
+            <span>
+                <table class="ui definition table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Age
+                            </td>
+
+                            <td>
+                              <div class="ui fluid input">
+                                <input name=age
+                                          rows=5
+                                          type="text"
+                                          style="width: 100%;"
+                                          value="{{ profile.age }}"/>
+                              </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Desired Future Option:
+                            </td>
+
+                            <td>
+                              {% if student.future_aspect == "HIGHER STUDIES" %}
+                                <label>Higher Studies</label> &ensp;
+                                <div class="ui toggle checkbox"
+                                     style="margin-top: 8px;">
+                                    <label>Placement</label>
+                                    <input name=fut type="checkbox" tabindex="1" value="1">
+                                </div>
+                              {% else %}
+                                <label>Higher Studies</label> &ensp;
+                                <div class="ui toggle checked checkbox"
+                                    style="margin-top: 8px;">
+                                    <label>Placement</label>
+                                    <input name=fut type="checkbox" value="2" tabindex="2" checked="">
+                                </div>
+                              {% endif %}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Address
+                            </td>
+
+                            <td>
+                              <div class="ui fluid input">
+                                <input name=address
+                                          rows=5
+                                          type="text"
+                                          style="width: 100%;"
+                                          value="{{ profile.address }}"/>
+                              </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </span>
+        </div>
+    </div>
+    <!--End of details card!-->
+
+    <!--The contact details card starts here!-->
+    <div class="ui fluid card">
+        <div class="content">
+            <div class="ui header">Contact Details</div>
+            <div class="ui divider"></div>
+
+            <span>
+                <table class="ui definition table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Contact
+                            </td>
+
+                            <td>
+
+                                <div class="ui large fluid input">
+                                    <a><i class="phone icon" id="contactIcon"></i>
+                                    <input name=contact type="text" value="{{ profile.phone_no }}">
+                                    </a>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Mail
+                            </td>
+
+                            <td>
+                                <span>
+                                    <a><i class="mail icon" id="mailIcon"></i>
+                                    {{ user.email }}
+                                    </a>
+                                </span>
+
+                            </td>
+                        </tr>
+
+                        </form>
+                    </tbody>
+                </table>
+            </span>
+        </div>
+    </div><!--The contact details card ends here!-->
+
+   {% if placementstatus %}
+    <!--The noticeboard card starts here!-->
+    <div class="ui fluid card">
+        <div class="content">
+            <div class="ui header">Activity</div>
+            <div class="ui divider"></div>
+
+            {% for ps in placementstatus %}
+            {% if ps.invitation != 'PENDING' and ps.invitation != 'Pending' %}
+            {% if ps.placed != 'Placed' and ps.placed != 'PLACED' %}
+            <span>
+              <div class="ui segments">
+                <div class="ui horizontal segments">
+                  <div class="ui segment">
+                    {{ ps.notify_id.placement_type }}
+                    {{ ps.notify_id.timestamp }}
+                    <!--form method="post" class="ui form" role="form">
+                      {% csrf_token %}
+                    <input value="Dismiss" name="submitstudentdismiss" type="submit" class="ui hidden red mini button right floated" hidden="hidden"/>
+                  </form-->
+                </div>
+                  </div>
+                  <div class="ui secondary segment">
+                    <p>{{ ps.notify_id.company_name }} ,<b> CTC: {{ ps.notify_id.ctc }}</b></p>
+                    <p>{{ ps.notify_id.description }} </p>
+                  </div>
+                  {% if ps.invitation == 'ACCEPTED' or ps.invitation == 'Accepted' %}
+                  <div class="ui secondary green inverted segment">
+                    <p>Invitation was <b>{{ ps.invitation}}.</b></p>
+                  </div>
+                  {% endif %}
+                  {% if ps.invitation == 'REJECTED' or ps.invitation == 'Rejected' %}
+                  <div class="ui secondary red inverted segment">
+                    <p>Invitation was <b>{{ ps.invitation}}.</b></p>
+                  </div>
+                  {% endif %}
+              </div>
+            </span><br>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+        </div>
+    </div><!--The noticeboard details card ends here!-->
+    {% endif %}
+{% endblock %}

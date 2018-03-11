@@ -1,0 +1,216 @@
+{% extends 'globals/base.html' %}
+{% load static %}
+{% block body %}
+{% block vacationfoodrequest %}
+
+    {% comment %}The tab menu starts here!{% endcomment %}
+    <div class="ui pointing secondary menu">
+        <a class="active item" data-tab="vactionfoodrequest">
+            Apply
+        </a>
+
+        <a class="item" data-tab="vactionfoodrequeststatus">
+            Status
+        </a>
+    </div>
+
+    <div class="ui active tab" data-tab="vactionfoodrequest">
+        <div class="ui vertical segment">
+
+            {% comment %}Form Tag starts here!{% endcomment %}
+            <form method="POST" action="vacasubmit/">
+                {% csrf_token %}
+                {% comment %}The add a new skill Accordian starts here!{% endcomment %}
+                <div class="ui form" style="padding: 8px; padding-left: 24px; padding-right: 24px;">
+
+                    <div class="ui header">
+                        Apply for Food during Vacations:
+                    </div>
+
+                    <br>
+
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Mess:</label>
+                            <input value={{messinfo.mess_option}} class="ui large input" readonly id="mess">
+                        </div>
+                    </div>
+
+                    <div class="two fields">
+                        <div class="field">
+                            <label>Leave From:</label>
+                            <input type="date" name="start_date" id="start_date">
+                        </div>
+
+                        <div class="field">
+                            <label>Leave To:</label>
+                            <input type="date" name="end_date" id="end_date">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Purpose:</label>
+                        <textarea rows="2" name="purpose" id="purpose"></textarea>
+                    </div>
+
+                    <div class="field">
+                        <button class="ui primary button right floated" type="submit" name="submit">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+            {% comment %}Form Tag ends here!{% endcomment %}
+
+            <br>
+            <br>
+
+            <div class="ui divider"></div>
+
+        </div>
+    </div>
+
+    <div class="ui tab" data-tab="vactionfoodrequeststatus">
+        
+
+        <div class="ui vertical segment" style="padding: 8px; padding-left: 24px; padding-right: 24px;">
+                
+            <br>
+
+            <div class="content">
+                <div class="description">
+
+                    <table class="ui very basic collapsing celled large sortable table"
+                           style="padding-left: 2.5%;
+                                                          padding-right: 2.5%;
+                                                          padding-top: 1%;
+                                                          padding-bottom: 1.5%;
+                                                          margin: auto;">
+                        <thead>
+                        <tr>
+                            <th>
+                                Date Of Application
+                            </th>
+
+                            <th>
+                                Student
+                            </th>
+
+                            <th>
+                                From
+                            </th>
+
+                            <th>
+                                To
+                            </th>
+
+                            <th>
+                                Purpose
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for req in vaca %}
+                        <tr>
+                            <td>
+                                {{req.app_date}}
+                            </td>
+                            <td>
+                                <h4 class="ui image header">
+                                    <img src="{% static 'globals/img/zlatan.jpg' %}" class="ui mini circular image">
+                                    <div class="content">
+                                        {{req.student_id}}
+                                    
+                                    </div>
+                                </h4>
+                            </td>
+
+                            <td>
+                                {{req.start_date}}
+                            </td>
+
+                            <td>
+                                {{req.end_date}}
+                            </td>
+
+                            <td>
+                                {{req.purpose}}
+                            </td>
+
+                            <td>
+                                {% if req.status == '1' %}
+                                <i class="large orange warning icon"></i>
+
+                                {% elif req.status == '0' %}
+                                <i class="large red x icon"></i>
+
+                                {% else %}
+                                <i class="large green checkmark icon"></i>
+                                
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                        </tbody>
+                    </table>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="extra content">
+            <div class="" style="text-align: center;">
+                <i class="large green checkmark icon"></i> : Approved &ensp;&ensp;&ensp;&ensp;&ensp;
+                <i class="large orange warning icon"></i> : Pending &ensp;&ensp;&ensp;&ensp;&ensp;
+                <i class="large red x icon"></i> : Declined
+            </div>
+        </div>
+        <div class="ui divider"></div>
+    </div>
+{% endblock %}
+{% endblock %}
+
+<!-- {% block javascript %}
+<script type="text/javascript" src="{% static 'globals/js/jquery.min.js' %}"></script>
+
+<script>
+        function vacarequest(){
+            $.ajax({
+                type: 'POST',
+                url: 'vacasubmit/',
+                dataType: 'json',
+                data: {
+                    'start_date':$("#start_date").val(),
+                    'end_date':$("#end_date").val(),
+                    'purpose':$("#purpose").val()
+                },          
+                success: function(data) {
+                    if(data.status){
+                        alert("Data Inserted Successfully");
+
+                        document.getElementById('start_date').value="";
+                        document.getElementById('end_date').value="";
+                        document.getElementById('purpose').value="";
+                    }
+                },
+                error: function(data, err) {
+                    alert(err.message);
+                }
+            });
+        return false;
+    }
+    
+
+
+</script>
+{% endblock %} -->
