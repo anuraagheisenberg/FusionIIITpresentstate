@@ -2,13 +2,13 @@ import json
 
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from PIL import Image
 
 from applications.globals.forms import IssueForm, WebFeedbackForm
-from applications.globals.models import Feedback, Issue, IssueImage, ExtraInfo
+from applications.globals.models import ExtraInfo, Feedback, Issue, IssueImage
 from Fusion.settings import LOGIN_URL
 
 

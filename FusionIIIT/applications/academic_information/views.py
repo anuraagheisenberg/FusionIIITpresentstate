@@ -1,11 +1,12 @@
 import json
 
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User
 
-from applications.globals.models import Designation, ExtraInfo, HoldsDesignation
+from applications.globals.models import (Designation, ExtraInfo,
+                                         HoldsDesignation)
 
 from .forms import AcademicTimetableForm, ExamTimetableForm, MinuteForm
 from .models import (Course, Exam_timetable, Grades, Meeting, Student,

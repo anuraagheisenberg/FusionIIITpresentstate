@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 
 # from applications.academic_procedures.models import Register
-from applications.academic_information.models import Course, Student, Calendar
+from applications.academic_information.models import Calendar, Course, Student
 from applications.globals.models import (DepartmentInfo, Designation,
                                          ExtraInfo, Faculty, HoldsDesignation)
 

@@ -1,8 +1,9 @@
+import datetime
+from datetime import date, time
+
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
 from django.core.exceptions import ValidationError
-from datetime import date ,time
-import datetime
 
 
 class QuizForm(forms.Form):

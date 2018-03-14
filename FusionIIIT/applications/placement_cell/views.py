@@ -1,32 +1,36 @@
-from cgi import escape
-from io import BytesIO
-from datetime import date
-import os, shutil
+import os
+import shutil
 import zipfile
+from cgi import escape
+from datetime import date
+from io import BytesIO
+from wsgiref.util import FileWrapper
 
-
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.db.models import Q, Count
+from django.db.models import Count, Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import get_template
 from django.utils import timezone
 from django.utils.encoding import smart_str
-from django.conf import settings
-from wsgiref.util import FileWrapper
 from xhtml2pdf import pisa
 
 from applications.academic_information.models import Student
-from applications.globals.models import ExtraInfo, DepartmentInfo, HoldsDesignation
+from applications.globals.models import (DepartmentInfo, ExtraInfo,
+                                         HoldsDesignation)
 
-from .forms import (AddEducation, AddProfile, AddSkill, AddCourse, AddAchievement, AddProject,
-                    AddPublication, AddPatent, AddExperience, AddChairmanVisit,
-                    SearchStudentRecord, AddSchedule, SearchPlacementRecord, SearchPbiRecord,
-                    SearchHigherRecord, ManagePlacementRecord, ManagePbiRecord, ManageHigherRecord)
-from .models import (Achievement, Course, Education, Experience, Has, Project, Publication, Skill,
-                     StudentPlacement, Patent, ChairmanVisit, PlacementSchedule, NotifyStudent,
-                     PlacementStatus, StudentRecord, PlacementRecord)
+from .forms import (AddAchievement, AddChairmanVisit, AddCourse, AddEducation,
+                    AddExperience, AddPatent, AddProfile, AddProject,
+                    AddPublication, AddSchedule, AddSkill, ManageHigherRecord,
+                    ManagePbiRecord, ManagePlacementRecord, SearchHigherRecord,
+                    SearchPbiRecord, SearchPlacementRecord,
+                    SearchStudentRecord)
+from .models import (Achievement, ChairmanVisit, Course, Education, Experience,
+                     Has, NotifyStudent, Patent, PlacementRecord,
+                     PlacementSchedule, PlacementStatus, Project, Publication,
+                     Skill, StudentPlacement, StudentRecord)
 
 
 @login_required

@@ -1,15 +1,19 @@
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
-from django.http import HttpResponseRedirect
-from applications.visitor_hostel.models import *
-from applications.visitor_hostel.forms import *
-from datetime import date
 import datetime
+from datetime import date
+
 from django.contrib import messages
-from applications.globals.models import *
-from django.db.models import Q
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
+
+from applications.globals.models import *
+from applications.visitor_hostel.forms import *
+from applications.visitor_hostel.models import *
+
 from .forms import InventoryForm
+
 
 @login_required(login_url='/accounts/login/')
 def visitorhostel(request):

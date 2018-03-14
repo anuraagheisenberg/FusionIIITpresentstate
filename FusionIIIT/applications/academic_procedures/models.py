@@ -6,7 +6,6 @@ from applications.academic_information.models import Course, Student
 from applications.globals.models import DepartmentInfo, ExtraInfo, Faculty
 
 
-
 class Constants:
     SEM_CHOICES = (
         ('1', '1'),
