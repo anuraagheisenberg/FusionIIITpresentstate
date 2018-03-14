@@ -1,5 +1,6 @@
 from datetime import date, datetime, timedelta
 
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -7,7 +8,6 @@ from django.shortcuts import get_object_or_404, render
 from applications.globals.models import ExtraInfo, User
 
 from .models import Caretaker, StudentComplain, Supervisor, Workers
-from django.contrib.auth import authenticate, login
 
 
 @login_required

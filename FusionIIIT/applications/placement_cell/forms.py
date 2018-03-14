@@ -1,7 +1,9 @@
 from django import forms
-from .models import Constants, Skill
-from applications.globals.models import DepartmentInfo
+
 from applications.academic_information.models import Constants as Con
+from applications.globals.models import DepartmentInfo
+
+from .models import Constants, Skill
 
 
 class AddEducation(forms.Form):
