@@ -224,7 +224,8 @@ def placeorder(request):
 
         stu = Messinfo.objects.get(student_id=student)
         if stu.mess_option == 'mess1':
-            dish = Nonveg_menu.objects.get(dish=request.POST.get("dish"), order_interval=request.POST.get('interval'))
+            dish = Nonveg_menu.objects.get(dish=request.POST.get("dish"),
+                                           order_interval=request.POST.get('interval'))
             order_interval = dish.order_interval
             order_date = datetime.datetime.now().date()
             nonveg_obj = Nonveg_data(student_id=student, order_date=order_date,
@@ -287,11 +288,9 @@ def vacasubmit(request):
 @transaction.atomic
 def menusubmit(request):
     user = request.user
-    extrainfo = ExtraInfo.objects.get(user=user)
     holds_designations = HoldsDesignation.objects.filter(user=user)
     desig = holds_designations
     for d in desig:
-        
         if d.designation.name == 'mess_convener':
 
             dish = Menu.objects.get(dish=request.POST.get("dish"))
@@ -301,16 +300,15 @@ def menusubmit(request):
             app_obj.save()
             return HttpResponseRedirect("/mess")
 
-    return render(request, 'mess.html', context)
+    return HttpResponseRedirect("/mess")
 
 
 @login_required
 def response(request, ap_id):
     user = request.user
-    extrainfo = ExtraInfo.objects.get(user=user)
     holds_designations = HoldsDesignation.objects.filter(user=user)
     desig = holds_designations
-    
+
     for d in desig:
         if d.designation.name == 'mess_manager':
             application = Menu_change_request.objects.get(pk=ap_id)
@@ -336,7 +334,6 @@ def response(request, ap_id):
 @login_required
 def processvacafood(request, ap_id):
     user = request.user
-    extrainfo = ExtraInfo.objects.get(user=user)
     holds_designations = HoldsDesignation.objects.filter(user=user)
     desig = holds_designations
 
@@ -374,20 +371,20 @@ def regsubmit(request):
         mess_info_inst.mess_option = mess
         mess_info_inst.save()
         mess_reg = Mess_reg.objects.last()
-        
+
         if Monthly_bill.objects.filter(student_id=student):
             return HttpResponseRedirect("/mess")
 
-        else:            
+        else:
 
             if mess_reg.end_reg.strftime("%B") in month_1:
-                while i<=5:
+                while i <= 5:
                     monthly_bill_obj = Monthly_bill(student_id=student, month=month_1[i])
                     monthly_bill_obj.save()
                     i = i+1
 
             else:
-                while j<=5:
+                while j <= 5:
                     monthly_bill_obj = Monthly_bill(student_id=student, month=month_2[j])
                     monthly_bill_obj.save()
                     j = j+1
@@ -402,9 +399,8 @@ def regsubmit(request):
 @transaction.atomic
 def regadd(request):
     user = request.user
-    extrainfo = ExtraInfo.objects.get(user=user)
     holds_designations = HoldsDesignation.objects.filter(user=user)
-    desig = holds_designations    
+    desig = holds_designations
 
     for d in desig:
         if d.designation.name == 'mess_manager':

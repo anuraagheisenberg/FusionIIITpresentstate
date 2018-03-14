@@ -7,7 +7,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from PIL import Image
 
 from applications.globals.forms import IssueForm, WebFeedbackForm
-from applications.globals.models import Feedback, Issue, IssueImage, ExtraInfo, HoldsDesignation
+from applications.globals.models import (ExtraInfo, Feedback, HoldsDesignation,
+                                         Issue, IssueImage)
 from Fusion.settings import LOGIN_URL
 
 
