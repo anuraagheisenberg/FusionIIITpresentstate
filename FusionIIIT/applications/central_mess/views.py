@@ -106,6 +106,8 @@ def mess(request):
 
             for r in rebates:
                 if r.status == '2':
+                    print(bill.month)
+                    print(r.start_date.strftime("%B"))
                     if r.start_date.strftime("%B") == bill.month:
                         rebate_count = rebate_count + abs((r.end_date - r.start_date).days) + 1
                         bill.rebate_count = rebate_count
@@ -461,10 +463,10 @@ def invitation(request):
     time = request.POST.get('time')
     invitation_obj = Mess_meeting(meet_date=date, agenda=agenda, venue=venue, meeting_time=time)
     invitation_obj.save()
-    data = {
-            'status': 1,
-    }
-    return JsonResponse(data)
+    # data = {
+    #         'status': 1,
+    # }
+    return HttpResponseRedirect("/mess")
 
 
 def responserebate(request, ap_id):
